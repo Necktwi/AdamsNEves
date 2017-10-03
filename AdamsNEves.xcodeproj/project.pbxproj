@@ -6,10 +6,15 @@
 	objectVersion = 48;
 	objects = {
 
+/* Begin PBXFileReference section */
+		65B506BB1F80A6C8003FF21C /* AdamsNEves.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = AdamsNEves.js; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
 /* Begin PBXGroup section */
 		65B506B41F80A624003FF21C = {
 			isa = PBXGroup;
 			children = (
+				65B506BB1F80A6C8003FF21C /* AdamsNEves.js */,
 			);
 			sourceTree = "<group>";
 		};
