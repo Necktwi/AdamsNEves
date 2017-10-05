@@ -28,15 +28,12 @@ mammal = function() {
       baby.sex = parseInt(Math.random() * 10) >= 5 ? "male" : "female";
       this.babies.push(baby);
       mate.babies.push(baby);
-      baby.serial.concat(baby.dad.serial);
-      baby.serial.push(dad.babies.length-1);
       return baby;
     }
   };
   this.babyCount = 0;
   this.babies = [];
   this.sex = "";
-  this.serial=[];
   this.__defineSetter__("sex", function() {
     if (arguments.caller === this.doLove) {
       if (argument[0] === "male") {
@@ -82,6 +79,57 @@ mammal = function() {
       this.dad.babies.push(this);
     }
   })
+  this.daDaDaDa=function(){
+    var dadadada=[];
+    var dad=this.dad;
+    while(!dad){
+      dadadada.push(dad);
+      dad=dad.dad;
+    }
+    return dadadada;
+  }
+  this.getOurGrandestDad(somemammal){
+    var myDadadada = this.daDaDaDa();
+    var itsDadadada = somemammal.daDaDaDa();
+    var myDadaCount = myDadadada.length-1;
+    var itsDadaCount = itsDadadada.length-1;
+    var ourGreatestDad = (myDadadada[myDadaCount]==itsDadadada[itsDadaCount])?myDadadada[myDadaCount]:null;
+    if(ourGreatestDad){
+      var elder, younger;
+      var elderDada, youngerDada;
+      var elderDadaCount, youngerDadaCount;
+      var ourYoungestGrandDad;
+      if(myDadaCount<itsDadaCount){
+        elder=this;
+        elderDada=myDadadada;
+        elderDadaCount=myDadaCount;
+        younger=somemammal;
+        youngerDada=itsDadadada;
+        youngerDadaCount=itsDadaCount;
+      }else{
+        elder=somemammal;
+        elderDada=itsDadadada;
+        elderDadaCount=itsDadaCount;
+        younger=this;
+        youngerDada=myDadadada;
+        youngerDadaCount=myDadaCount;
+      }
+      while(elderDadaCount>-1){
+        if(elderDada[elderDadaCount]===youngerDada[youngerDadaCount]){
+          ourYoungestGrandDad=elderDada[elderDadaCount];
+          --elderDadaCount;
+          --youngerDadaCount;
+
+        }else{
+          break;
+        }
+      }
+
+    }
+    if(ourYoungestGrandDad){
+      
+    }
+  }
 }
 
 kittyTheMotherOfAllCats = {
@@ -105,6 +153,7 @@ function human(dialogue){
     this.__proto__ = new mammal();
     this.relationWith= function(otherHuman){
       if(otherHuman.__proto__ instanceof human){
+
         if(){
           return "mom";
         }else if(){
@@ -147,7 +196,6 @@ function Adam(name){
     this.__proto__=new human();
     this.sex="male";
     this.name=name;
-    this.serial.push(AdamsNEves.length);
     AdamsNEves.push(this);
   }else{
     return null;
@@ -159,7 +207,6 @@ function Eve(name){
     this.__proto__=new human();
     this.sex="female";
     this.name=name;
-    this.serial.push(AdamsNEves.length);
     AdamsNEves.push(this);
   }else{
     return null;
