@@ -5,6 +5,9 @@
 **/
 AdamsNEves=[];
 mammal = function() {
+  if(!this.constructor==mammal){
+    return;
+  }
   this.doLove = function(mate) {
     if (mate && mate !== this && (mate.__proto__ instanceof mammal) && mate.sex !== this.sex) {
       var baby = {};
@@ -88,7 +91,7 @@ mammal = function() {
     }
     return dadadada;
   }
-  this.getOurGrandestDad(somemammal){
+  this.getOurGrandestDad=function(somemammal){
     var myDadadada = this.daDaDaDa();
     var itsDadadada = somemammal.daDaDaDa();
     var myDadaCount = myDadadada.length-1;
@@ -127,7 +130,27 @@ mammal = function() {
 
     }
     if(ourYoungestGrandDad){
-      
+      return ourYoungestGrandDad;
+    }
+  }
+  this.pathTo=function(someMammal){
+    var traceSet=new Set();
+    traceSet.add(this)
+    var upTraced=false;
+    var downTraced=false;
+    var currentNode=this;
+    var paths=[[]];
+    var currentPath=paths[0];
+    while(true){
+      if(!upTraced){
+        if(!traceSet.has(currentNode.dad)){
+        currentNode=currentNode.dad;
+      }else if(!traceSet.has(currentNode.mom)){
+        currentNode=currentNode.mom;
+      }
+      }else if(!downTraced){
+
+      }
     }
   }
 }
@@ -148,9 +171,13 @@ kittuTheFatherOfAllCats = {
   name: "kittuTheFatherOfAllCats",
   sex: "male"
 };
+humanCount=0;
 function human(dialogue){
-  if(this.constructor === human){
+  if(this.constructor !== human){
+    return;
+  }
     this.__proto__ = new mammal();
+    this.serial=humanCount++;
     this.relationWith= function(otherHuman){
       if(otherHuman.__proto__ instanceof human){
 
@@ -187,9 +214,6 @@ function human(dialogue){
         }
       }
     }
-  }else{
-    return false;
-  }
 }
 function Adam(name){
   if(this.constructor === Adam){
