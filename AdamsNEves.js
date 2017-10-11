@@ -134,7 +134,8 @@ mammal = function() {
     }
   }
   this.pathTo=function(someMammal){
-    var traceSet=new Set();
+    var pTraceSet=new Set();
+    var mTraceSet=new Set();
     traceSet.add(this)
     var upTraced=false;
     var downTraced=false;
