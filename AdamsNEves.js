@@ -5,7 +5,7 @@
 **/
 AdamsNEves=[];
 mammal = function() {
-  if(!this.constructor==mammal){
+  if(!this.constructor===mammal){
     return;
   }
   this.doLove = function(mate) {
@@ -144,11 +144,12 @@ mammal = function() {
     var currentPath=paths[0];
     while(true){
       if(!upTraced){
-        if(!traceSet.has(currentNode.dad)){
-        currentNode=currentNode.dad;
-      }else if(!traceSet.has(currentNode.mom)){
-        currentNode=currentNode.mom;
-      }
+        if(!mTraceSet.has(currentNode.dad)){
+          pTraceSet.add(currentNode);
+          currentNode=currentNode.dad;
+        }else if(!mTraceSet.has(currentNode.mom)){
+          currentNode=currentNode.mom;
+        }
       }else if(!downTraced){
 
       }
