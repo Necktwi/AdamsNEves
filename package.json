@@ -1,0 +1,9 @@
+{
+  "name": "adams-neves",
+  "version": "0.0.0",
+  "description": "AdamsNEves",
+  "main": "app.js",
+  "author": {
+    "name": "admin"
+  }
+}
