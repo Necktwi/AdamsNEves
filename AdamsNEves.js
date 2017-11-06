@@ -134,25 +134,56 @@ mammal = function() {
     }
   }
   this.pathTo=function(someMammal){
-    var pTraceSet=new Set();
-    var mTraceSet=new Set();
-    traceSet.add(this)
-    var upTraced=false;
-    var downTraced=false;
+    var boundary={};
+    var content=new Set();
+    boundary=new Map();
+    var Track_ = function(){
+      if(!this.constructor===Track_)return false;
+      this.path=[];
+      this.traceSet={};
+    }
+    boundary.set(this, new Track_());
     var currentNode=this;
-    var paths=[[]];
-    var currentPath=paths[0];
     while(true){
-      if(!upTraced){
-        if(!mTraceSet.has(currentNode.dad)){
-          pTraceSet.add(currentNode);
-          currentNode=currentNode.dad;
-        }else if(!mTraceSet.has(currentNode.mom)){
-          currentNode=currentNode.mom;
+      var track=boundary.get(currentNode);
+      var NewTrack=new Track_();
+      var Path=[];
+      for(var i=0;i<track.path.length;i++)Path.push(track.path[i]);
+      NewTrack.path=Path;
+      if(!track.traceSet.Mom){
+        if(!content.has(currentNode.Mom) && !boundary.has(currentNode.Mom)){
+          boundary.set(currentNode.Mom, NewTrack);
         }
-      }else if(!downTraced){
-
+        track.traceSet.Mom=currentNode.Mom;
+        NewTrack.path.push("Mom");
+        if(currentNode.Mom===someMammal)break;
+      }else if(!track.traceSet.Dad){
+        if(!content.has(currentNode.Dad) && !boundary.has(currentNode.Mom)){
+          boundary.set(currentNode.Dad, NewTrack);
+        }
+        track.traceSet.Dad=currentNode.Dad;
+        NewTrack.path.push("Dad")
+        if(currentNode.Dad===someMammal)break;
+      }else if (!track.traceSet.babies || track.traceSet.babies.length<currentNode.babies.length) {
+        if(!track.traceSet.babies){
+          track.trackSet.babies=[];
+          NewTrack.path.push("babies");
+        }
+        var babyIndex = track.trackSet.babies.length;
+        if(!content.has(currentNode.babies[babyIndex]) || !boundary.has(currentNode.babies[babyIndex])){
+          boundary.set(currentNode.babies[babyIndex],NewTrack);
+        }
+        track.traceSet.babies.push(currentNode.babies[babyIndex]);
+        NewTrack.path.push(babyIndex);
+        if(currentNode.babies[babyIndex]===someMammal)break;
+      }else{
+        content.add(currentNode);
+        boundary.delete(currentNode);
+        currentNode=boundary.keys().next().value;
       }
+    }
+    if(boundary.has(someMammal)){
+      return boundary.get(someMammal).path;
     }
   }
 }
@@ -178,44 +209,53 @@ function human(dialogue){
   if(this.constructor !== human){
     return;
   }
-    this.__proto__ = new mammal();
-    this.serial=humanCount++;
-    this.relationWith= function(otherHuman){
-      if(otherHuman.__proto__ instanceof human){
-
-        if(){
-          return "mom";
+  this.__proto__ = new mammal();
+  this.serial=humanCount++;
+  this.relationWith= function(someOne){
+    if(otherHuman.__proto__ instanceof human){
+      var Path=pathTo(someOne);
+      var Relation="self";
+      var Relative=this;
+      var PreRelation="self";
+      for(int i=0;i<Path.length;i++){
+        Relation=Path[i];
+        Relative=Relative[Relation];
+        if(PreRelation==="self"&&Relation==="Mom"){
+          PreRelation="Mom";
         }else if(){
-          return "dad";
-        }else if(){
-          return "momsis";
-        }else if(){
-          return "aunt";
-        }else if(){
-          return "dadbro";
-        }else if(){
-          return "uncle";
-        }else if(){
-          return "mapa";
-        }else if(){
-          return "mama";
-        }else if(){
-          return "papa";
-        }else if(){
-          return "pama";
-        }else if(){
-          return "bro";
-        }else if(){
-          return "sis";
-        }else if(){
-          return "bav";
-        }else if(){
-          return "mar";
-        }else{
-          return "noRelation";
-        }
+        return "mom";
+      }else if(){
+        return "dad";
+      }else if(){
+        return "momsis";
+      }else if(){
+        return "aunt";
+      }else if(){
+        return "dadbro";
+      }else if(){
+        return "uncle";
+      }else if(){
+        return "mapa";
+      }else if(){
+        return "mama";
+      }else if(){
+        return "papa";
+      }else if(){
+        return "pama";
+      }else if(){
+        return "bro";
+      }else if(){
+        return "sis";
+      }else if(){
+        return "bav";
+      }else if(){
+        return "mar";
+      }else{
+        return "noRelation";
       }
     }
+  }
+  }
 }
 function Adam(name){
   if(this.constructor === Adam){
