@@ -164,13 +164,17 @@ mammal = function() {
         track.traceSet.Dad=currentNode.Dad;
         NewTrack.path.push("Dad")
         if(currentNode.Dad===someMammal)break;
-      }else if (!track.traceSet.babies || track.traceSet.babies.length<currentNode.babies.length) {
+      }else if (!track.traceSet.babies || track.traceSet.babies.length<
+        currentNode.babies.length
+      ) {
         if(!track.traceSet.babies){
           track.trackSet.babies=[];
           NewTrack.path.push("babies");
         }
         var babyIndex = track.trackSet.babies.length;
-        if(!content.has(currentNode.babies[babyIndex]) || !boundary.has(currentNode.babies[babyIndex])){
+        if(!content.has(currentNode.babies[babyIndex]) ||
+        !boundary.has(currentNode.babies[babyIndex])
+      ){
           boundary.set(currentNode.babies[babyIndex],NewTrack);
         }
         track.traceSet.babies.push(currentNode.babies[babyIndex]);
@@ -217,22 +221,72 @@ function human(dialogue){
       var Relation="self";
       var Relative=this;
       var PreRelation="self";
+      var PreRelative=this;
+      var cross=false;
+      var grandCount=0;
       for(int i=0;i<Path.length;i++){
         Relation=Path[i];
         Relative=Relative[Relation];
-        if(PreRelation==="self"&&Relation==="Mom"){
-          PreRelation="Mom";
-        }else if(){
+        if(PreRelation==="self"){
+          PreRelation=Relation;
+          if (Relation==="Mom" ||
+          (PreRelation.sex==="female" && Relation==="babies")
+        ) {
+          cross=!cross;
+        }
+      }else if(PreRelation==="Mom"){
+        if(Relation==="Mom") {
+          ++grandCount;
+        }elseif(Relation==="Dad"){
+          ++grandCount++;
+        }elseif(Relation==="babies"){
+          --grandCount++;
+        }
         return "mom";
-      }else if(){
+      }else if(PreRelation==="Dad"){
+        if(Relation==="Mom") {
+          ++grandCount;
+        }elseif(Relation==="Dad"){
+          ++grandCount++;
+        }elseif(Relation==="babies"){
+          --grandCount++;
+        }
         return "dad";
       }else if(){
+        if(Relation==="Mom") {
+          ++grandCount;
+        }elseif(Relation==="Dad"){
+          ++grandCount++;
+        }elseif(Relation==="babies"){
+          --grandCount++;
+        }
         return "momsis";
       }else if(){
+        if(Relation==="Mom") {
+          ++grandCount;
+        }elseif(Relation==="Dad"){
+          ++grandCount++;
+        }elseif(Relation==="babies"){
+          --grandCount++;
+        }
         return "aunt";
       }else if(){
+        if(Relation==="Mom") {
+          ++grandCount;
+        }elseif(Relation==="Dad"){
+          ++grandCount++;
+        }elseif(Relation==="babies"){
+          --grandCount++;
+        }
         return "dadbro";
       }else if(){
+        if(Relation==="Mom") {
+          ++grandCount;
+        }elseif(Relation==="Dad"){
+          ++grandCount++;
+        }elseif(Relation==="babies"){
+          --grandCount++;
+        }
         return "uncle";
       }else if(){
         return "mapa";
@@ -255,7 +309,7 @@ function human(dialogue){
       }
     }
   }
-  }
+}
 }
 function Adam(name){
   if(this.constructor === Adam){
