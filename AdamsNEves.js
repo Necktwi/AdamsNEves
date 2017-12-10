@@ -2,6 +2,7 @@
 * Gowtham Kudupudi 01/10/2017
 * MIT License
 **/
+                                                                                
 AdamsNEves=[];
 mammal = function() {
   if(!this.constructor===mammal){
@@ -226,7 +227,9 @@ function human(dialogue){
       var cross =       false;
       var grandCount =  0;
       bool Maternal = false;
+      bool Paternal = false;
       bool DaughterSide = false;
+      bool SonSide = false;
       for (int i=0; i<Path.length; i++) {
         Relation =  Path[i];
         Relative =  Relative[Relation];
@@ -238,12 +241,15 @@ function human(dialogue){
             if (i===0) Maternal=true;
           } else if(Relation === "Dad") {
             ++grandCount;
+            if (i === 0) Paternal = true;
           } else if(Relation === "babies") {
             --grandCount;
             ++i;
             Relative =  Relative[Path[i]];
             if (i===1 && Relative.sex === "female") {
               DaughterSide = true;
+            } else if (i===1 && Relative.sex === "male") {
+              SonSide = true;
             }
           }
         } else if (PreRelation === "Dad") {
@@ -457,9 +463,43 @@ function human(dialogue){
             }
           }
         }
-      } else if (grandCount>2 && Path.length == grandCount) {
-        return "DirectAncestor";
-      } else if ()
+      } else if (grandCount>2) {
+        if ( Path.length === grandCount ) {
+          if (Maternal) {
+            return "DirectAncestor(Maternal)";
+          } else {
+            return "DirectAncestor(Paternal)";
+          }
+        } else {
+          if (Maternal) {
+            return "Ancestor(Maternal)";
+          } else if (Paternal) {
+            return "Ancestor(Paternal)";
+          } else if (DaughterSide) {
+            
+          } else {
+            
+          }
+        }
+      } else {
+        if ( Path.length === grandCount ) {
+          if (DaughterSide) {
+            return "DirectDescendant(DaughterSide)";
+          } else {
+            return "DirectDescendant(SonSide)";
+          }
+        } else {
+          if (DaughterSide) {
+            return "Descendant(DaughterSide)";
+          } else if(SonSide) {
+            return "Descendant(SonSide)";
+          } else if (Maternal) {
+            return "Descendant(Maternal)"
+          } else {
+            return "Descendant(Paternal)"
+          }
+        }
+      }
     }
   }
 }
